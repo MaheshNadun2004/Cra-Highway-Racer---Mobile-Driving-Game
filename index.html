@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Easy Cra Racer - Mobile Buttons</title>
+    <title>Cra Racer - Small</title>
     <style>
         * {
             margin: 0;
@@ -12,213 +12,162 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
-
         body {
             background: linear-gradient(145deg, #071a18 0%, #0a2a25 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
-            touch-action: pan-y;
-            padding: 12px;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            padding: 8px;
         }
-
         .game-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
-            max-width: 450px;
-            margin: 0 auto;
+            max-width: 360px;
         }
-
         canvas {
             display: block;
             width: 100%;
             height: auto;
             background: #1a3a32;
-            border-radius: 28px;
-            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5);
-            cursor: pointer;
-            touch-action: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
-
-        /* Score Panel */
         .score-panel {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            margin-top: 16px;
-            margin-bottom: 16px;
-            gap: 10px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            padding: 10px 18px;
-            border-radius: 60px;
+            margin-top: 12px;
+            margin-bottom: 12px;
+            gap: 8px;
+            background: rgba(0,0,0,0.6);
+            padding: 6px 12px;
+            border-radius: 50px;
         }
-
         .score-card, .best-card {
             background: #000000aa;
-            padding: 6px 18px;
-            border-radius: 50px;
+            padding: 4px 12px;
+            border-radius: 40px;
             color: #ffdd99;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 0.85rem;
             font-family: monospace;
         }
-
         .score-card span, .best-card span {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: #aaffdd;
-            margin-right: 6px;
+            margin-right: 4px;
         }
-
         .reset-btn {
             background: #ffaa44;
             border: none;
-            padding: 8px 20px;
-            border-radius: 50px;
+            padding: 5px 14px;
+            border-radius: 40px;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             color: #1e3a2f;
             cursor: pointer;
-            transition: 0.1s;
-            touch-action: manipulation;
         }
-
-        .reset-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* BIG LEFT/RIGHT BUTTONS for mobile */
         .button-row {
             display: flex;
-            gap: 25px;
+            gap: 15px;
             width: 100%;
             justify-content: center;
-            margin-top: 10px;
-            margin-bottom: 8px;
+            margin-top: 8px;
+            margin-bottom: 5px;
         }
-
         .drive-btn {
             flex: 1;
             background: linear-gradient(145deg, #2c5a4e, #1e4238);
-            border: 3px solid #ffcc77;
-            border-radius: 70px;
-            padding: 20px 10px;
+            border: 2px solid #ffcc77;
+            border-radius: 50px;
+            padding: 10px 6px;
             text-align: center;
-            font-size: 2.2rem;
+            font-size: 1.2rem;
             font-weight: bold;
             color: #ffefb9;
             cursor: pointer;
-            transition: 0.05s linear;
-            box-shadow: 0 8px 0 #0f2a24;
-            touch-action: manipulation;
-            letter-spacing: 4px;
+            box-shadow: 0 4px 0 #0f2a24;
             font-family: monospace;
         }
-
         .drive-btn:active {
-            transform: translateY(4px);
-            box-shadow: 0 4px 0 #0f2a24;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #0f2a24;
         }
-
         .status-area {
             background: #00000099;
-            padding: 5px 18px;
-            border-radius: 40px;
-            font-size: 0.75rem;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 0.65rem;
             color: #ffdd99;
             text-align: center;
-        }
-
-        @media (max-width: 550px) {
-            .drive-btn {
-                padding: 16px 8px;
-                font-size: 1.8rem;
-            }
-            .score-card, .best-card {
-                padding: 4px 12px;
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .drive-btn {
-                padding: 14px 5px;
-                font-size: 1.5rem;
-            }
         }
     </style>
 </head>
 <body>
 <div class="game-container">
-    <canvas id="gameCanvas" width="400" height="580"></canvas>
+    <canvas id="gameCanvas" width="320" height="460"></canvas>
 
     <div class="score-panel">
-        <div class="score-card"><span>🏆 SCORE</span> <span id="scoreValue">0</span></div>
-        <div class="best-card"><span>⭐ BEST</span> <span id="bestValue">0</span></div>
+        <div class="score-card"><span>🏆</span> <span id="scoreValue">0</span></div>
+        <div class="best-card"><span>⭐</span> <span id="bestValue">0</span></div>
         <button class="reset-btn" id="resetBtn">🔄 RESTART</button>
     </div>
 
-    <!-- BIG LEFT / RIGHT BUTTONS - Mobile Friendly -->
     <div class="button-row">
         <div class="drive-btn" id="leftBtn">◀ LEFT</div>
         <div class="drive-btn" id="rightBtn">RIGHT ▶</div>
     </div>
     
     <div class="status-area" id="gameStatusText">
-        🚗 Tap LEFT / RIGHT to move | Avoid red cars
+        🚗 Tap LEFT/RIGHT | Avoid red cars
     </div>
 </div>
 
 <script>
     (function(){
-        // ---------- SIMPLE RACING GAME WITH BIG BUTTONS ----------
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Game dimensions
+        // SMALLER CAR SIZE
         const LANES = 3;
         const LANE_WIDTH = canvas.width / LANES;
-        const CAR_WIDTH = 44;
-        const CAR_HEIGHT = 66;
+        const CAR_WIDTH = 36;
+        const CAR_HEIGHT = 54;
 
         let player = {
-            lane: 1,      // 0=left, 1=middle, 2=right
+            lane: 1,
             x: 0,
-            y: canvas.height - 88,
+            y: canvas.height - 72,
             width: CAR_WIDTH,
             height: CAR_HEIGHT
         };
 
-        let enemies = [];      // enemy cars
+        let enemies = [];
         let gameRunning = true;
         let score = 0;
         let bestScore = 0;
         let spawnTimer = 0;
-        let baseSpeed = 3.5;
+        let baseSpeed = 3.2;
         
-        // Load best score
         try {
-            let saved = localStorage.getItem('mobileCraBest');
+            let saved = localStorage.getItem('mobileCraBestSmall');
             if(saved) {
                 bestScore = parseInt(saved);
                 document.getElementById('bestValue').innerText = bestScore;
             }
         } catch(e) {}
 
-        // Update car X position based on lane
         function updateCarX() {
             let laneCenter = player.lane * LANE_WIDTH + LANE_WIDTH/2;
             player.x = laneCenter - CAR_WIDTH/2;
-            // boundary safety
-            player.x = Math.min(Math.max(player.x, 5), canvas.width - CAR_WIDTH - 5);
+            player.x = Math.min(Math.max(player.x, 4), canvas.width - CAR_WIDTH - 4);
         }
 
-        // Move functions (called by buttons)
         function moveLeft() {
             if(!gameRunning) return;
             if(player.lane > 0) {
@@ -235,12 +184,11 @@
             }
         }
 
-        // Spawn enemy car
         function spawnEnemy() {
             let laneIndex = Math.floor(Math.random() * LANES);
             let laneCenter = laneIndex * LANE_WIDTH + LANE_WIDTH/2;
             let carX = laneCenter - CAR_WIDTH/2;
-            carX = Math.min(Math.max(carX, 5), canvas.width - CAR_WIDTH - 5);
+            carX = Math.min(Math.max(carX, 4), canvas.width - CAR_WIDTH - 4);
             enemies.push({
                 x: carX,
                 y: -CAR_HEIGHT,
@@ -250,37 +198,29 @@
             });
         }
 
-        // Update game logic
         function updateGame() {
             if(!gameRunning) return;
-
-            // speed increases slightly with score (more fun)
-            let extraSpeed = Math.min(2.2, Math.floor(score / 450) * 0.4);
+            let extraSpeed = Math.min(1.8, Math.floor(score / 500) * 0.35);
             let currentSpeed = baseSpeed + extraSpeed;
 
-            // 1. Move enemies down
-            for(let i = 0; i < enemies.length; i++) {
+            for(let i=0; i<enemies.length; i++) {
                 enemies[i].y += currentSpeed;
             }
 
-            // 2. Collision detection (simple rectangle)
-            for(let i = 0; i < enemies.length; i++) {
+            for(let i=0; i<enemies.length; i++) {
                 let e = enemies[i];
-                if(player.x < e.x + e.width &&
-                   player.x + player.width > e.x &&
-                   player.y < e.y + e.height &&
-                   player.y + player.height > e.y) {
+                if(player.x < e.x+e.width && player.x+player.width > e.x &&
+                   player.y < e.y+e.height && player.y+player.height > e.y) {
                     gameRunning = false;
-                    document.getElementById('gameStatusText').innerHTML = "💥 CRASH! Press RESTART 💥";
+                    document.getElementById('gameStatusText').innerHTML = "💥 CRASH! Press RESTART";
                     return;
                 }
             }
 
-            // 3. Remove enemies that passed and increase score
             let passedCount = 0;
-            for(let i = 0; i < enemies.length; i++) {
-                if(enemies[i].y > canvas.height + 120) {
-                    enemies.splice(i, 1);
+            for(let i=0; i<enemies.length; i++) {
+                if(enemies[i].y > canvas.height + 100) {
+                    enemies.splice(i,1);
                     i--;
                     passedCount++;
                 }
@@ -290,21 +230,16 @@
                 updateUI();
             }
 
-            // 4. Spawn enemies with dynamic delay
-            let spawnDelay = Math.max(28, 42 - Math.floor(score / 280));
+            let spawnDelay = Math.max(28, 42 - Math.floor(score/300));
             if(spawnTimer <= 0) {
                 spawnEnemy();
                 spawnTimer = spawnDelay;
-                // sometimes double spawn for challenge but fair
-                if(Math.random() < 0.18 && score > 200) {
-                    spawnEnemy();
-                }
+                if(Math.random() < 0.15 && score > 200) spawnEnemy();
             } else {
                 spawnTimer--;
             }
 
-            // 5. Passive score for survival
-            score += 0.22;
+            score += 0.2;
             updateUI();
         }
 
@@ -313,22 +248,18 @@
             if(Math.floor(score) > bestScore) {
                 bestScore = Math.floor(score);
                 document.getElementById('bestValue').innerText = bestScore;
-                localStorage.setItem('mobileCraBest', bestScore);
+                localStorage.setItem('mobileCraBestSmall', bestScore);
             }
         }
 
-        // ---------- DRAW EVERYTHING (simple & colorful) ----------
         function drawRoad() {
-            // asphalt
             ctx.fillStyle = "#1d352f";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // lane markings (dashed)
             ctx.beginPath();
             ctx.strokeStyle = "#FFE2A4";
-            ctx.lineWidth = 4;
-            ctx.setLineDash([20, 32]);
-            for(let i = 1; i < LANES; i++) {
+            ctx.lineWidth = 3;
+            ctx.setLineDash([15, 28]);
+            for(let i=1; i<LANES; i++) {
                 let lineX = i * LANE_WIDTH;
                 ctx.beginPath();
                 ctx.moveTo(lineX, 0);
@@ -336,77 +267,50 @@
                 ctx.stroke();
             }
             ctx.setLineDash([]);
-            
-            // road edges
             ctx.strokeStyle = "#f5bc70";
-            ctx.lineWidth = 3;
-            ctx.strokeRect(10, 0, canvas.width - 20, canvas.height);
+            ctx.lineWidth = 2;
+            ctx.strokeRect(8, 0, canvas.width-16, canvas.height);
         }
 
         function drawPlayer() {
-            ctx.save();
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = "#22ddbb";
-            // car body
             ctx.fillStyle = "#2dd4bf";
             ctx.beginPath();
-            ctx.roundRect(player.x, player.y, CAR_WIDTH, CAR_HEIGHT, 12);
+            ctx.roundRect(player.x, player.y, CAR_WIDTH, CAR_HEIGHT, 10);
             ctx.fill();
-            // windows
             ctx.fillStyle = "#1e5a6f";
-            ctx.fillRect(player.x + 8, player.y + 12, CAR_WIDTH - 16, 24);
+            ctx.fillRect(player.x+6, player.y+10, CAR_WIDTH-12, 18);
             ctx.fillStyle = "#aaf0ff";
-            ctx.fillRect(player.x + 12, player.y + 18, 8, 12);
-            ctx.fillRect(player.x + CAR_WIDTH - 20, player.y + 18, 8, 12);
-            // headlights
+            ctx.fillRect(player.x+9, player.y+14, 6, 9);
+            ctx.fillRect(player.x+CAR_WIDTH-15, player.y+14, 6, 9);
             ctx.fillStyle = "#FFD966";
             ctx.beginPath();
-            ctx.arc(player.x + 8, player.y + CAR_HEIGHT - 12, 7, 0, Math.PI * 2);
-            ctx.arc(player.x + CAR_WIDTH - 8, player.y + CAR_HEIGHT - 12, 7, 0, Math.PI * 2);
+            ctx.arc(player.x+6, player.y+CAR_HEIGHT-8, 5, 0, Math.PI*2);
+            ctx.arc(player.x+CAR_WIDTH-6, player.y+CAR_HEIGHT-8, 5, 0, Math.PI*2);
             ctx.fill();
-            ctx.fillStyle = "white";
-            ctx.beginPath();
-            ctx.arc(player.x + 5, player.y + CAR_HEIGHT - 12, 3, 0, Math.PI * 2);
-            ctx.arc(player.x + CAR_WIDTH - 5, player.y + CAR_HEIGHT - 12, 3, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
         }
 
-        function drawEnemy(car) {
-            ctx.save();
-            ctx.shadowBlur = 5;
+        function drawEnemy(e) {
             ctx.fillStyle = "#cf4a4a";
             ctx.beginPath();
-            ctx.roundRect(car.x, car.y, CAR_WIDTH, CAR_HEIGHT, 12);
+            ctx.roundRect(e.x, e.y, CAR_WIDTH, CAR_HEIGHT, 10);
             ctx.fill();
             ctx.fillStyle = "#661111";
-            ctx.fillRect(car.x + 8, car.y + 12, CAR_WIDTH - 16, 22);
+            ctx.fillRect(e.x+6, e.y+10, CAR_WIDTH-12, 16);
             ctx.fillStyle = "#ff7777";
-            ctx.fillRect(car.x + 10, car.y + 44, 7, 14);
-            ctx.fillRect(car.x + CAR_WIDTH - 17, car.y + 44, 7, 14);
-            // angry eyes
-            ctx.fillStyle = "#ffaaaa";
-            ctx.beginPath();
-            ctx.arc(car.x + 12, car.y + 16, 5, 0, Math.PI * 2);
-            ctx.arc(car.x + CAR_WIDTH - 12, car.y + 16, 5, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
+            ctx.fillRect(e.x+8, e.y+36, 6, 12);
+            ctx.fillRect(e.x+CAR_WIDTH-14, e.y+36, 6, 12);
         }
 
         function drawGameOverlay() {
             if(!gameRunning) {
-                ctx.fillStyle = "rgba(0,0,0,0.78)";
+                ctx.fillStyle = "rgba(0,0,0,0.75)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.font = "bold 28px 'Segoe UI'";
+                ctx.font = "bold 20px 'Segoe UI'";
                 ctx.fillStyle = "#ffbb77";
-                ctx.fillText("GAME OVER", canvas.width/2 - 90, canvas.height/2 - 30);
-                ctx.font = "14px monospace";
-                ctx.fillStyle = "#eedd99";
-                ctx.fillText("Press RESTART button", canvas.width/2 - 85, canvas.height/2 + 25);
+                ctx.fillText("GAME OVER", canvas.width/2-65, canvas.height/2-20);
             }
         }
 
-        // Helper rounded rect
         if (!CanvasRenderingContext2D.prototype.roundRect) {
             CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
                 if (w < 2*r) r = w/2;
@@ -424,120 +328,32 @@
             };
         }
 
-        // Reset game function
         function resetGame() {
             gameRunning = true;
             score = 0;
             enemies = [];
-            spawnTimer = 6;
+            spawnTimer = 5;
             player.lane = 1;
             updateCarX();
-            document.getElementById('gameStatusText').innerHTML = "🚗 Tap LEFT / RIGHT to move | Avoid red cars";
+            document.getElementById('gameStatusText').innerHTML = "🚗 Tap LEFT/RIGHT | Avoid red cars";
             updateUI();
         }
 
-        // Animation loop
         function animate() {
             updateGame();
             drawRoad();
             for(let e of enemies) drawEnemy(e);
             drawPlayer();
             drawGameOverlay();
-            
-            // show small speed meter
-            let extra = Math.min(2.2, Math.floor(score / 450) * 0.4);
-            let speedKmh = Math.floor((baseSpeed + extra) * 16);
-            ctx.font = "bold 12px monospace";
-            ctx.fillStyle = "#D6FFE0";
-            ctx.fillText(`⚡ ${speedKmh} km/h`, 14, 32);
             requestAnimationFrame(animate);
         }
 
-        // ---------- MOBILE BUTTON EVENT HANDLERS (Big & Responsive) ----------
-        const leftButton = document.getElementById('leftBtn');
-        const rightButton = document.getElementById('rightBtn');
-        const resetButton = document.getElementById('resetBtn');
+        document.getElementById('leftBtn').addEventListener('click', () => moveLeft());
+        document.getElementById('leftBtn').addEventListener('touchstart', (e) => { e.preventDefault(); moveLeft(); });
+        document.getElementById('rightBtn').addEventListener('click', () => moveRight());
+        document.getElementById('rightBtn').addEventListener('touchstart', (e) => { e.preventDefault(); moveRight(); });
+        document.getElementById('resetBtn').addEventListener('click', () => resetGame());
         
-        // Touch & click for left button
-        leftButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            moveLeft();
-        });
-        leftButton.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            moveLeft();
-        });
-        
-        // Right button
-        rightButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            moveRight();
-        });
-        rightButton.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            moveRight();
-        });
-        
-        // Reset button
-        resetButton.addEventListener('click', () => {
-            resetGame();
-        });
-        resetButton.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            resetGame();
-        });
-        
-        // Optional keyboard support (for debugging, but mobile mainly uses buttons)
-        window.addEventListener('keydown', (e) => {
-            if(e.key === 'ArrowLeft') { moveLeft(); e.preventDefault(); }
-            if(e.key === 'ArrowRight') { moveRight(); e.preventDefault(); }
-            if(e.key === 'r' || e.key === 'R') { resetGame(); e.preventDefault(); }
-        });
-        
-        // Also allow swipe on canvas as extra (but main is big buttons)
-        let touchStartX = null;
-        canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            const rect = canvas.getBoundingClientRect();
-            const touchX = (e.touches[0].clientX - rect.left) * (canvas.width / rect.width);
-            touchStartX = touchX;
-        });
-        canvas.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            if(touchStartX !== null && gameRunning) {
-                const rect = canvas.getBoundingClientRect();
-                const currentX = (e.touches[0].clientX - rect.left) * (canvas.width / rect.width);
-                const diff = currentX - touchStartX;
-                if(Math.abs(diff) > 18) {
-                    if(diff > 0) moveRight();
-                    else moveLeft();
-                    touchStartX = currentX;
-                }
-            }
-        });
-        canvas.addEventListener('touchend', () => { touchStartX = null; });
-        
-        // Mouse drag for desktop (optional)
-        let mouseDown = false;
-        let lastMouseX = 0;
-        canvas.addEventListener('mousedown', (e) => {
-            mouseDown = true;
-            lastMouseX = e.offsetX;
-            e.preventDefault();
-        });
-        canvas.addEventListener('mousemove', (e) => {
-            if(mouseDown && gameRunning) {
-                let diff = e.offsetX - lastMouseX;
-                if(Math.abs(diff) > 15) {
-                    if(diff > 0) moveRight();
-                    else moveLeft();
-                    lastMouseX = e.offsetX;
-                }
-            }
-        });
-        canvas.addEventListener('mouseup', () => { mouseDown = false; });
-        
-        // initialize
         updateCarX();
         resetGame();
         animate();
