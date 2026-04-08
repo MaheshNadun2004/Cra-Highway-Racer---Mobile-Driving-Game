@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Cra Racer - Small</title>
+    <title>Cra Racer - Desktop Small</title>
     <style>
         * {
             margin: 0;
@@ -19,62 +19,65 @@
             justify-content: center;
             align-items: center;
             font-family: 'Segoe UI', system-ui, sans-serif;
-            padding: 8px;
+            padding: 4px;
         }
         .game-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
-            max-width: 360px;
+            max-width: 300px;  /* Desktop එකේදී කුඩා වෙන්න */
         }
         canvas {
             display: block;
             width: 100%;
             height: auto;
             background: #1a3a32;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
         .score-panel {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            margin-top: 12px;
-            margin-bottom: 12px;
-            gap: 8px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            gap: 6px;
             background: rgba(0,0,0,0.6);
-            padding: 6px 12px;
-            border-radius: 50px;
+            padding: 5px 10px;
+            border-radius: 40px;
         }
         .score-card, .best-card {
             background: #000000aa;
-            padding: 4px 12px;
-            border-radius: 40px;
+            padding: 3px 10px;
+            border-radius: 30px;
             color: #ffdd99;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-family: monospace;
         }
         .score-card span, .best-card span {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             color: #aaffdd;
-            margin-right: 4px;
+            margin-right: 3px;
         }
         .reset-btn {
             background: #ffaa44;
             border: none;
-            padding: 5px 14px;
-            border-radius: 40px;
+            padding: 4px 12px;
+            border-radius: 30px;
             font-weight: bold;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #1e3a2f;
             cursor: pointer;
         }
+        .reset-btn:active {
+            transform: scale(0.95);
+        }
         .button-row {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             width: 100%;
             justify-content: center;
             margin-top: 8px;
@@ -84,33 +87,41 @@
             flex: 1;
             background: linear-gradient(145deg, #2c5a4e, #1e4238);
             border: 2px solid #ffcc77;
-            border-radius: 50px;
-            padding: 10px 6px;
+            border-radius: 40px;
+            padding: 8px 5px;
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bold;
             color: #ffefb9;
             cursor: pointer;
-            box-shadow: 0 4px 0 #0f2a24;
+            box-shadow: 0 3px 0 #0f2a24;
             font-family: monospace;
         }
         .drive-btn:active {
             transform: translateY(2px);
-            box-shadow: 0 2px 0 #0f2a24;
+            box-shadow: 0 1px 0 #0f2a24;
         }
         .status-area {
             background: #00000099;
-            padding: 3px 12px;
-            border-radius: 30px;
-            font-size: 0.65rem;
+            padding: 3px 10px;
+            border-radius: 25px;
+            font-size: 0.6rem;
             color: #ffdd99;
             text-align: center;
+        }
+        
+        /* Desktop එකේදී game container එක මැදට ගන්න */
+        @media (min-width: 768px) {
+            .game-container {
+                max-width: 300px;  /* Desktop එකේදීත් කුඩායි */
+            }
         }
     </style>
 </head>
 <body>
 <div class="game-container">
-    <canvas id="gameCanvas" width="320" height="460"></canvas>
+    <!-- Canvas එකේ width/height කුඩා කරලා -->
+    <canvas id="gameCanvas" width="280" height="400"></canvas>
 
     <div class="score-panel">
         <div class="score-card"><span>🏆</span> <span id="scoreValue">0</span></div>
@@ -133,16 +144,16 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
-        // SMALLER CAR SIZE
+        // CAR SIZE එකත් කුඩා කරලා
         const LANES = 3;
         const LANE_WIDTH = canvas.width / LANES;
-        const CAR_WIDTH = 36;
-        const CAR_HEIGHT = 54;
+        const CAR_WIDTH = 32;      // 36 වෙනුවට 32
+        const CAR_HEIGHT = 48;     // 54 වෙනුවට 48
 
         let player = {
             lane: 1,
             x: 0,
-            y: canvas.height - 72,
+            y: canvas.height - 64,  // car එක යටට ගන්න
             width: CAR_WIDTH,
             height: CAR_HEIGHT
         };
@@ -152,10 +163,10 @@
         let score = 0;
         let bestScore = 0;
         let spawnTimer = 0;
-        let baseSpeed = 3.2;
+        let baseSpeed = 3.0;
         
         try {
-            let saved = localStorage.getItem('mobileCraBestSmall');
+            let saved = localStorage.getItem('craRacerDesktopSmall');
             if(saved) {
                 bestScore = parseInt(saved);
                 document.getElementById('bestValue').innerText = bestScore;
@@ -165,7 +176,7 @@
         function updateCarX() {
             let laneCenter = player.lane * LANE_WIDTH + LANE_WIDTH/2;
             player.x = laneCenter - CAR_WIDTH/2;
-            player.x = Math.min(Math.max(player.x, 4), canvas.width - CAR_WIDTH - 4);
+            player.x = Math.min(Math.max(player.x, 3), canvas.width - CAR_WIDTH - 3);
         }
 
         function moveLeft() {
@@ -188,7 +199,7 @@
             let laneIndex = Math.floor(Math.random() * LANES);
             let laneCenter = laneIndex * LANE_WIDTH + LANE_WIDTH/2;
             let carX = laneCenter - CAR_WIDTH/2;
-            carX = Math.min(Math.max(carX, 4), canvas.width - CAR_WIDTH - 4);
+            carX = Math.min(Math.max(carX, 3), canvas.width - CAR_WIDTH - 3);
             enemies.push({
                 x: carX,
                 y: -CAR_HEIGHT,
@@ -200,7 +211,7 @@
 
         function updateGame() {
             if(!gameRunning) return;
-            let extraSpeed = Math.min(1.8, Math.floor(score / 500) * 0.35);
+            let extraSpeed = Math.min(1.5, Math.floor(score / 500) * 0.3);
             let currentSpeed = baseSpeed + extraSpeed;
 
             for(let i=0; i<enemies.length; i++) {
@@ -212,14 +223,14 @@
                 if(player.x < e.x+e.width && player.x+player.width > e.x &&
                    player.y < e.y+e.height && player.y+player.height > e.y) {
                     gameRunning = false;
-                    document.getElementById('gameStatusText').innerHTML = "💥 CRASH! Press RESTART";
+                    document.getElementById('gameStatusText').innerHTML = "💥 CRASH! RESTART";
                     return;
                 }
             }
 
             let passedCount = 0;
             for(let i=0; i<enemies.length; i++) {
-                if(enemies[i].y > canvas.height + 100) {
+                if(enemies[i].y > canvas.height + 80) {
                     enemies.splice(i,1);
                     i--;
                     passedCount++;
@@ -248,7 +259,7 @@
             if(Math.floor(score) > bestScore) {
                 bestScore = Math.floor(score);
                 document.getElementById('bestValue').innerText = bestScore;
-                localStorage.setItem('mobileCraBestSmall', bestScore);
+                localStorage.setItem('craRacerDesktopSmall', bestScore);
             }
         }
 
@@ -257,8 +268,8 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.beginPath();
             ctx.strokeStyle = "#FFE2A4";
-            ctx.lineWidth = 3;
-            ctx.setLineDash([15, 28]);
+            ctx.lineWidth = 2;
+            ctx.setLineDash([12, 22]);
             for(let i=1; i<LANES; i++) {
                 let lineX = i * LANE_WIDTH;
                 ctx.beginPath();
@@ -269,45 +280,48 @@
             ctx.setLineDash([]);
             ctx.strokeStyle = "#f5bc70";
             ctx.lineWidth = 2;
-            ctx.strokeRect(8, 0, canvas.width-16, canvas.height);
+            ctx.strokeRect(6, 0, canvas.width-12, canvas.height);
         }
 
         function drawPlayer() {
             ctx.fillStyle = "#2dd4bf";
             ctx.beginPath();
-            ctx.roundRect(player.x, player.y, CAR_WIDTH, CAR_HEIGHT, 10);
+            ctx.roundRect(player.x, player.y, CAR_WIDTH, CAR_HEIGHT, 8);
             ctx.fill();
             ctx.fillStyle = "#1e5a6f";
-            ctx.fillRect(player.x+6, player.y+10, CAR_WIDTH-12, 18);
+            ctx.fillRect(player.x+5, player.y+8, CAR_WIDTH-10, 14);
             ctx.fillStyle = "#aaf0ff";
-            ctx.fillRect(player.x+9, player.y+14, 6, 9);
-            ctx.fillRect(player.x+CAR_WIDTH-15, player.y+14, 6, 9);
+            ctx.fillRect(player.x+7, player.y+12, 5, 7);
+            ctx.fillRect(player.x+CAR_WIDTH-12, player.y+12, 5, 7);
             ctx.fillStyle = "#FFD966";
             ctx.beginPath();
-            ctx.arc(player.x+6, player.y+CAR_HEIGHT-8, 5, 0, Math.PI*2);
-            ctx.arc(player.x+CAR_WIDTH-6, player.y+CAR_HEIGHT-8, 5, 0, Math.PI*2);
+            ctx.arc(player.x+5, player.y+CAR_HEIGHT-7, 4, 0, Math.PI*2);
+            ctx.arc(player.x+CAR_WIDTH-5, player.y+CAR_HEIGHT-7, 4, 0, Math.PI*2);
             ctx.fill();
         }
 
         function drawEnemy(e) {
             ctx.fillStyle = "#cf4a4a";
             ctx.beginPath();
-            ctx.roundRect(e.x, e.y, CAR_WIDTH, CAR_HEIGHT, 10);
+            ctx.roundRect(e.x, e.y, CAR_WIDTH, CAR_HEIGHT, 8);
             ctx.fill();
             ctx.fillStyle = "#661111";
-            ctx.fillRect(e.x+6, e.y+10, CAR_WIDTH-12, 16);
+            ctx.fillRect(e.x+5, e.y+8, CAR_WIDTH-10, 13);
             ctx.fillStyle = "#ff7777";
-            ctx.fillRect(e.x+8, e.y+36, 6, 12);
-            ctx.fillRect(e.x+CAR_WIDTH-14, e.y+36, 6, 12);
+            ctx.fillRect(e.x+7, e.y+30, 5, 10);
+            ctx.fillRect(e.x+CAR_WIDTH-12, e.y+30, 5, 10);
         }
 
         function drawGameOverlay() {
             if(!gameRunning) {
-                ctx.fillStyle = "rgba(0,0,0,0.75)";
+                ctx.fillStyle = "rgba(0,0,0,0.8)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.font = "bold 20px 'Segoe UI'";
+                ctx.font = "bold 16px 'Segoe UI'";
                 ctx.fillStyle = "#ffbb77";
-                ctx.fillText("GAME OVER", canvas.width/2-65, canvas.height/2-20);
+                ctx.fillText("GAME OVER", canvas.width/2-50, canvas.height/2-15);
+                ctx.font = "10px monospace";
+                ctx.fillStyle = "#eedd99";
+                ctx.fillText("RESTART", canvas.width/2-25, canvas.height/2+15);
             }
         }
 
@@ -348,11 +362,19 @@
             requestAnimationFrame(animate);
         }
 
+        // Event listeners
         document.getElementById('leftBtn').addEventListener('click', () => moveLeft());
         document.getElementById('leftBtn').addEventListener('touchstart', (e) => { e.preventDefault(); moveLeft(); });
         document.getElementById('rightBtn').addEventListener('click', () => moveRight());
         document.getElementById('rightBtn').addEventListener('touchstart', (e) => { e.preventDefault(); moveRight(); });
         document.getElementById('resetBtn').addEventListener('click', () => resetGame());
+        
+        // Keyboard support for desktop
+        window.addEventListener('keydown', (e) => {
+            if(e.key === 'ArrowLeft') { moveLeft(); e.preventDefault(); }
+            if(e.key === 'ArrowRight') { moveRight(); e.preventDefault(); }
+            if(e.key === 'r' || e.key === 'R') { resetGame(); e.preventDefault(); }
+        });
         
         updateCarX();
         resetGame();
